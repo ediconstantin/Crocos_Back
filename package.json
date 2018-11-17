@@ -1,0 +1,27 @@
+{
+  "name": "nairu-backend",
+  "version": "1.0.0",
+  "description": "REST back-end which will sustain nairu quizz-like app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ediconstantin/Crocos_Back.git"
+  },
+  "author": "crocos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ediconstantin/Crocos_Back/issues"
+  },
+  "homepage": "https://github.com/ediconstantin/Crocos_Back#readme",
+  "dependencies": {
+    "koa": "^2.6.2",
+    "koa-combine-routers": "^4.0.2",
+    "koa-router": "^7.4.0",
+    "mysql2": "^1.6.4",
+    "sequelize": "^4.41.2"
+  }
+}
