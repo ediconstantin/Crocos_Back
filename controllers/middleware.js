@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports.authorize = async (ctx, next) => {
     console.log('authorize layer');
     await next();

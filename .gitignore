@@ -61,4 +61,4 @@ typings/
 .next
 
 # database credential
-database.js
+models/database.js
