@@ -1,9 +1,14 @@
+'use strict';
+
 const PORT = 3015;
 const Koa = require('koa');
 const Router = require('koa-router');
 const combineRouters = require('koa-combine-routers');
+const sequelize = require('./models');
 const app = new Koa();
 const router = new Router();
+
+sequelize.database.sync();
 
 router.get("/", async ctx => {
    ctx.body = "nairu back-end init";
