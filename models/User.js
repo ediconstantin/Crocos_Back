@@ -2,9 +2,21 @@ module.exports = (sequelize, DataTypes) => {
     return sequelize.define('user',
         {
             'token': DataTypes.STRING,
-            'firstname': DataTypes.STRING,
-            'lastname': DataTypes.STRING,
-            'email': DataTypes.STRING,
+            'firstname': {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            'lastname': {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            'email': {
+                type: DataTypes.STRING,
+                allowNull: false,
+                validate: {
+                    isEmail: true
+                }
+            },
             'photo': DataTypes.STRING,
             'isProf': {
                 type: DataTypes.BOOLEAN,

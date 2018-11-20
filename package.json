@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ediconstantin/Crocos_Back#readme",
   "dependencies": {
     "koa": "^2.6.2",
+    "koa-body-parser": "^1.1.2",
     "koa-combine-routers": "^4.0.2",
     "koa-router": "^7.4.0",
     "mysql2": "^1.6.4",
