@@ -1,7 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('answer',
         {
-            'answer': DataTypes.INTEGER,
+            'answer': {
+                type: DataTypes.STRING,
+                defaultValue: "#"
+            }
         }, {
             underscored: true
         })

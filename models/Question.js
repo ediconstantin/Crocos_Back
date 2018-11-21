@@ -1,12 +1,30 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('question',
         {
-            'question': DataTypes.STRING,
-            'ans1': DataTypes.INTEGER,
-            'ans2': DataTypes.INTEGER,
-            'ans3': DataTypes.INTEGER,
-            'ans4': DataTypes.INTEGER,
-            'correct': DataTypes.INTEGER,
+            'question': {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            'ans1': {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            'ans2': {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            'ans3': {
+                type: DataTypes.STRING,
+                defaultValue: '#'
+            },
+            'ans4': {
+                type: DataTypes.STRING,
+                defaultValue: '#'
+            },
+            'correct': {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
             'feedback': DataTypes.STRING,
             'photo': DataTypes.STRING,
             'multiple': {

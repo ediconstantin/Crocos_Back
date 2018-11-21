@@ -1,7 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('user',
         {
-            'token': DataTypes.STRING,
+            'token': {
+                type: DataTypes.STRING,
+                unique: true
+            },
             'firstname': {
                 type: DataTypes.STRING,
                 allowNull: false
@@ -19,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
             },
             'photo': DataTypes.STRING,
             'isProf': {
+                type: DataTypes.BOOLEAN,
+                defaultValue: 0
+            },
+            'isAdmin': {
                 type: DataTypes.BOOLEAN,
                 defaultValue: 0
             },

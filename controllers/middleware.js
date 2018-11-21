@@ -5,6 +5,10 @@ module.exports.authorize = async (ctx, next) => {
     await next();
 }
 
+//TO DO
+//isProf middleware
+//a middleware to identify if a user is taking a test and let him access private static files
+
 module.exports.errorHandling = async (ctx, next) => {
     try {
         await next();

@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('test',
         {
-            'description': DataTypes.STRING,
             'name': DataTypes.STRING,
+            'description': DataTypes.STRING,
             'duration': DataTypes.INTEGER,
             'questionsNumber': DataTypes.INTEGER,
             'retries': {
