@@ -15,7 +15,7 @@ module.exports.errorHandling = async (ctx, next) => {
     }
     catch (err) {
         console.log(err.message);
-        ctx.status = 500;
-        ctx.body = "Error happened";
+        ctx.status = err.code | 500;
+        ctx.body = err.info | 'Error happened';
     }
 }
