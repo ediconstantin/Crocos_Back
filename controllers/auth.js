@@ -1,10 +1,11 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 const User = require('../models').User;
-const jwtSecret = require('./utils').jwtSecret;
+const jwtSecret = require('./utils/constants').jwtSecret;
 const axios = require('axios');
-const validateEmail = require('./utils').validateEmail;
-const validateGroup= require('./utils').validateGroup;
+const AppError = require('./utils/AppError').AppError;
+const validateEmail = require('./utils/helpers').validateEmail;
+const validateGroup = require('./utils/helpers').validateGroup;
 
 module.exports.register = async (ctx) => {
 
@@ -40,15 +41,12 @@ module.exports.login = async (ctx) => {
         ctx.body = {
             token: jwt.sign({
                 isProf: user.isProf, isAdmin: user.isAdmin, id: user.id,
-                groupId: user.groupId, firstname: user.firstname
+                groupId: user.groupId, firstname: user.firstname, lastname: user.lastname
             },
                 jwtSecret),
             message: 'Login successfull'
         }
     } else {
-        ctx.status = 403;
-        ctx.body = {
-            message: 'Forbbidden'
-        }
+        throw new AppError('You are not registered', 403);
     }
 };

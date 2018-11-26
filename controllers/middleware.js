@@ -1,12 +1,7 @@
 'use strict';
 
-module.exports.authorize = async (ctx, next) => {
-    console.log('authorize layer');
-    await next();
-}
+const AppError = require('./utils/AppError').AppError;
 
-//TO DO
-//isProf middleware
 //a middleware to identify if a user is taking a test and let him access private static files
 
 module.exports.errorHandling = async (ctx, next) => {
@@ -14,9 +9,14 @@ module.exports.errorHandling = async (ctx, next) => {
         await next();
     }
     catch (err) {
-        console.log(err);
-        console.log(err.info);
-        ctx.status = err.code | 500;
-        ctx.body = err.info | 'Error happened';
+        if (err instanceof AppError) {
+            ctx.status = err.code;
+            ctx.body = {message: err.message};
+            console.log(err);
+        } else {
+            ctx.status = 500;
+            ctx.body = {message: 'Server Error'};
+            console.log(err);
+        }
     }
 }

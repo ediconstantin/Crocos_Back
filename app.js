@@ -7,27 +7,32 @@ const combineRouters = require('koa-combine-routers');
 const sequelize = require('./models');
 const bodyParser = require('koa-body-parser');
 const jwt = require('koa-jwt');
-const jwtSecret = require('./controllers/utils').jwtSecret;
+const jwtSecret = require('./controllers/utils/constants').jwtSecret;
 const app = new Koa();
+const middleware = require('./controllers/middleware');
 const auth = require('./controllers/auth');
 const router = new Router();
 const userRouter = require('./routes/user.js');
 
-app.use(bodyParser());
+//this will be removed probably
 sequelize.database.sync();
 
+app.use(bodyParser());
+app.use(middleware.errorHandling);
+
 router.get("/", async (ctx, next) => {
-    ctx.body = "nairu back-end init";
+    ctx.body = { message: "nairu back-end init" };
 });
 
 router.post('/login', auth.login);
 router.post('/register', auth.register);
 
-app.use(jwt({secret: jwtSecret, key: 'jwtdata'}));
+app.use(router.routes());
+app.use(router.allowedMethods());
+app.use(jwt({ secret: jwtSecret, key: 'jwtdata' }));
 
 userRouter.prefix('/user');
 const combinedRouters = combineRouters(
-    router,
     userRouter
 )
 
