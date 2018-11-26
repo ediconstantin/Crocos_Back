@@ -2,6 +2,8 @@
 
 const PORT = 3015;
 const Koa = require('koa');
+const serve = require('koa-static');
+const mount = require('koa-mount');
 const Router = require('koa-router');
 const bodyParser = require('koa-body-parser');
 const combineRouters = require('koa-combine-routers');
@@ -41,12 +43,13 @@ app.use(router.allowedMethods());
 
 app.use(jwt({ secret: jwtSecret, key: 'jwtdata' }));
 
+app.use(mount('/user/photo', serve('./public/identicons')));
 userRouter.prefix('/user');
 const combinedRouters = combineRouters(
     userRouter
-)
+);
 
-app.use(combinedRouters())
+app.use(combinedRouters());
 
 app.listen(PORT, () => {
     console.log('nairu back-end');

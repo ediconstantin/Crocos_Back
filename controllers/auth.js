@@ -15,8 +15,8 @@ module.exports.register = async (ctx) => {
         userData.groupId = await validateGroup(userData, ctx.request.body.group);
     }
 
-    //generate photo and append its path to the userData.photo object
-    //userData.photo = generatePhoto(ctx.request.body.email)
+    //generate photo using identicon
+    //it will be served as a static on url/photo/emailWithout(@stud.ase.ro).jpg
 
     await User.create(userData);
 

@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
                     isEmail: true
                 }
             },
-            'photo': DataTypes.STRING,
             'isProf': {
                 type: DataTypes.BOOLEAN,
                 defaultValue: 0
