@@ -1,6 +1,7 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 const User = require('../models').User;
+const jwtSecret = require('./utils').jwtSecret;
 const axios = require('axios');
 const validateEmail = require('./utils').validateEmail;
 const validateGroup= require('./utils').validateGroup;
@@ -41,7 +42,7 @@ module.exports.login = async (ctx) => {
                 isProf: user.isProf, isAdmin: user.isAdmin, id: user.id,
                 groupId: user.groupId, firstname: user.firstname
             },
-                'wegijwoge3414-weiroj.//3423jgr123@@@krebmerbr'),
+                jwtSecret),
             message: 'Login successfull'
         }
     } else {
