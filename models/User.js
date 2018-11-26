@@ -1,10 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('user',
         {
-            'token': {
-                type: DataTypes.STRING,
-                unique: true
-            },
             'firstname': {
                 type: DataTypes.STRING,
                 allowNull: false
