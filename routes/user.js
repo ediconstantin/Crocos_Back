@@ -3,11 +3,7 @@
 const Router = require('koa-router');
 const router = Router();
 const userController = require('../controllers/user.js');
-const middleware = require('../controllers/middleware');
-
-router.use(middleware.errorHandling);
 
 router.get("/", userController.getUsers)
-router.post("/", userController.createUser)
 
 module.exports = router;
