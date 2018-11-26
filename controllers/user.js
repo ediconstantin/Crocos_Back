@@ -2,7 +2,7 @@
 
 const User = require('../models').User;
 
-module.exports.getUser = async (ctx) => {
+module.exports.getUsers = async (ctx) => {
     let users = await User.findAll();
     ctx.body = users;
 }

@@ -7,6 +7,8 @@ const combineRouters = require('koa-combine-routers');
 const sequelize = require('./models');
 const bodyParser = require('koa-body-parser');
 const jwt = require('koa-jwt');
+const logger = require('koa-logger');
+
 const jwtSecret = require('./controllers/utils/constants').jwtSecret;
 const app = new Koa();
 const middleware = require('./controllers/middleware');
@@ -18,6 +20,7 @@ const userRouter = require('./routes/user.js');
 sequelize.database.sync();
 
 app.use(bodyParser());
+app.use(logger());
 app.use(middleware.errorHandling);
 
 router.get("/", async (ctx, next) => {
