@@ -3,6 +3,9 @@
 const Router = require('koa-router');
 const router = Router();
 const testController = require('../controllers/test');
+const professorCheck = require('../controllers/middleware.js').professorCheck;
+
+//router.use(professorCheck);
 
 router.get('/', testController.getTests);
 router.get('/:test_id', testController.getTest);

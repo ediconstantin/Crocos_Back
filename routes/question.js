@@ -3,9 +3,9 @@
 const Router = require('koa-router');
 const router = Router();
 const questionController = require('../controllers/question.js');
-const middleware = require('../controllers/middleware.js');
+const professorCheck = require('../controllers/middleware.js').professorCheck;
 
-router.use(middleware.professorCheck);
+router.use(professorCheck);
 
 router.get('/', questionController.getQuestions);
 router.get('/:id', questionController.getQuestion);
