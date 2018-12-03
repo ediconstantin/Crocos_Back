@@ -16,6 +16,7 @@ const morgan = require('koa-morgan');
 const userRouter = require('./routes/user.js');
 const questionRouter = require('./routes/question.js');
 const testRouter = require('./routes/test.js');
+const sessionRouter = require('/routes/session.js');
 const middleware = require('./controllers/middleware');
 const auth = require('./controllers/auth');
 const jwtSecret = require('./controllers/utils/constants').jwtSecret;
@@ -49,11 +50,13 @@ app.use(mount('/user/photo', serve('./public/identicons')));
 userRouter.prefix('/user');
 questionRouter.prefix('/question');
 testRouter.prefix('/test');
+sessionRouter.prefix('/session');
 
 const combinedRouters = combineRouters(
     userRouter,
     questionRouter,
-    testRouter
+    testRouter,
+    sessionRouter
 );
 
 app.use(combinedRouters());

@@ -74,6 +74,7 @@ module.exports.createSession = async (ctx) => {
     //conclude datetime db format
     //validate the date
     //isPublic will be managed by a cron job? probably
+    //generate token
 
     ctx.request.body.user_id = ctx.state.jwtdata.id;
     await Session.create(ctx.request.body);
