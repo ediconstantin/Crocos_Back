@@ -57,7 +57,7 @@ module.exports.getSession = async (ctx) => {
     ctx.body = session;
 }
 
-module.exports.getPublicSession = async (ctx) => {
+module.exports.getPublicSessionByToken = async (ctx) => {
 
     let session = await Session.findOne({
         where: {
