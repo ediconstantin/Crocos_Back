@@ -1,0 +1,859 @@
+{
+	"info": {
+		"_postman_id": "6241e5da-8e29-40a7-95ee-632e37f1ee03",
+		"name": "nairu",
+		"description": "Endpoints Documentation and Examples for nairu's REST back-end.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "question",
+			"item": [
+				{
+					"name": "getQuestion",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1Byb2YiOmZhbHNlLCJpc0FkbWluIjpmYWxzZSwiaWQiOjE0LCJmaXJzdG5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIiwibGFzdG5hbWUiOiJCSVNBRyIsImlhdCI6MTU0MzI2NjEzOX0.3MJieujCzB-7WCfOwejK7opP_cK3rQx9S-aZNXOcZvY"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/question/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"question",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getQuestions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createQuestion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1Byb2YiOmZhbHNlLCJpc0FkbWluIjpmYWxzZSwiaWQiOjE0LCJmaXJzdG5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIiwibGFzdG5hbWUiOiJCSVNBRyIsImlhdCI6MTU0MzI2NjEzOX0.3MJieujCzB-7WCfOwejK7opP_cK3rQx9S-aZNXOcZvY"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "question",
+									"value": "Ce este POO?",
+									"type": "text"
+								},
+								{
+									"key": "ans1",
+									"value": "O paradigma de programare",
+									"type": "text"
+								},
+								{
+									"key": "ans2",
+									"value": "Nimic",
+									"type": "text"
+								},
+								{
+									"key": "ans3",
+									"value": "O nimic",
+									"type": "text"
+								},
+								{
+									"key": "ans4",
+									"value": "da",
+									"type": "text"
+								},
+								{
+									"key": "correct",
+									"value": "ans1",
+									"type": "text"
+								},
+								{
+									"key": "feedback",
+									"value": "De ce nu stii ce e poo?",
+									"type": "text"
+								},
+								{
+									"key": "multiple",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "duration",
+									"value": "25",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/question",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateQuestion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1Byb2YiOmZhbHNlLCJpc0FkbWluIjpmYWxzZSwiaWQiOjE0LCJmaXJzdG5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIiwibGFzdG5hbWUiOiJCSVNBRyIsImlhdCI6MTU0MzI2NjEzOX0.3MJieujCzB-7WCfOwejK7opP_cK3rQx9S-aZNXOcZvY"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "ans1",
+									"value": "E POO nu",
+									"type": "text"
+								},
+								{
+									"key": "question_id",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"value": "asd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/question",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteQuestion",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1Byb2YiOmZhbHNlLCJpc0FkbWluIjpmYWxzZSwiaWQiOjE0LCJmaXJzdG5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIiwibGFzdG5hbWUiOiJCSVNBRyIsImlhdCI6MTU0MzI2NjEzOX0.3MJieujCzB-7WCfOwejK7opP_cK3rQx9S-aZNXOcZvY"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/question/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"question",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e92ca7ff-192d-4996-acdc-771ddf536476",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3437e580-7105-449c-a144-da35ab4b72de",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "base",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjYwY2QzNzcxYzExMjVjOWY3N2U4MmUzOTk3NGUxNjNhOGM3M2IzYzQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMzk5Mzg3NDM3MTUyLWIzNnV1bTJmbnNtazd1ajMyZHN2cXFyMGR2cm9qb2hlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMzk5Mzg3NDM3MTUyLWIzNnV1bTJmbnNtazd1ajMyZHN2cXFyMGR2cm9qb2hlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA0NTY5OTcwNzg2MzE4MDE3OTg2IiwiaGQiOiJzdHVkLmFzZS5ybyIsImVtYWlsIjoiYmlzYWdhbGV4YW5kcnUxNkBzdHVkLmFzZS5ybyIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiYnN1Si1MYUlTMXgxcFJTSE5zRjJfUSIsIm5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIEJJU0FHIiwicGljdHVyZSI6Imh0dHBzOi8vbGg1Lmdvb2dsZXVzZXJjb250ZW50LmNvbS8tZ09jeDFsMjdRU0kvQUFBQUFBQUFBQUkvQUFBQUFBQUFBQUEvQUdEZ3ctZ29xUmJBNFo2Z01mWmZQY21rLURKZG5zMDNLQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiQUxFWEFORFJVIFNURUZBTiIsImZhbWlseV9uYW1lIjoiQklTQUciLCJsb2NhbGUiOiJybyIsImlhdCI6MTU0MzI2MzE2MSwiZXhwIjoxNTQzMjY2NzYxLCJqdGkiOiJiOWI4ZTAwMDhiY2EyNWNlZTAyOWI0MThhNTZlZDYxZmRlYzQxZjI2In0.pTA9WcyPISExFrVi-o0NYT0O80V08lCaxqe3if6fPgQmBWWrGvLZYiS9D4DJQjM-p6zLo8JH3Ox6iAJlwhPjk2B2D5AQMeawpLcR5JuAkG42qU8aYYNpLVs-O7u2N11GbgVuY3ackEm2gKoBXOBI7a_G_kEI_a3wqeVEgdVw-0z2No3GiplPZjBU9JDvbPAE2-VMkFoHg8qEQRxIrQHAzqOiFlyUCIOl4mOLKyYna7Al63xnXLesuWPxubAEZmDimzBEGK7CU3tiE8YVlJXK51CnkmWuD2-jRHQsOZEd5ylWs3HArBn6CyzctAqsKvLSCmykpem5-L8bDh7RqZzz2Q",
+									"type": "text"
+								},
+								{
+									"key": "group",
+									"value": "1066",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjYwY2QzNzcxYzExMjVjOWY3N2U4MmUzOTk3NGUxNjNhOGM3M2IzYzQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMzk5Mzg3NDM3MTUyLWIzNnV1bTJmbnNtazd1ajMyZHN2cXFyMGR2cm9qb2hlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMzk5Mzg3NDM3MTUyLWIzNnV1bTJmbnNtazd1ajMyZHN2cXFyMGR2cm9qb2hlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA0NTY5OTcwNzg2MzE4MDE3OTg2IiwiaGQiOiJzdHVkLmFzZS5ybyIsImVtYWlsIjoiYmlzYWdhbGV4YW5kcnUxNkBzdHVkLmFzZS5ybyIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiYnN1Si1MYUlTMXgxcFJTSE5zRjJfUSIsIm5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIEJJU0FHIiwicGljdHVyZSI6Imh0dHBzOi8vbGg1Lmdvb2dsZXVzZXJjb250ZW50LmNvbS8tZ09jeDFsMjdRU0kvQUFBQUFBQUFBQUkvQUFBQUFBQUFBQUEvQUdEZ3ctZ29xUmJBNFo2Z01mWmZQY21rLURKZG5zMDNLQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiQUxFWEFORFJVIFNURUZBTiIsImZhbWlseV9uYW1lIjoiQklTQUciLCJsb2NhbGUiOiJybyIsImlhdCI6MTU0MzI2MzE2MSwiZXhwIjoxNTQzMjY2NzYxLCJqdGkiOiJiOWI4ZTAwMDhiY2EyNWNlZTAyOWI0MThhNTZlZDYxZmRlYzQxZjI2In0.pTA9WcyPISExFrVi-o0NYT0O80V08lCaxqe3if6fPgQmBWWrGvLZYiS9D4DJQjM-p6zLo8JH3Ox6iAJlwhPjk2B2D5AQMeawpLcR5JuAkG42qU8aYYNpLVs-O7u2N11GbgVuY3ackEm2gKoBXOBI7a_G_kEI_a3wqeVEgdVw-0z2No3GiplPZjBU9JDvbPAE2-VMkFoHg8qEQRxIrQHAzqOiFlyUCIOl4mOLKyYna7Al63xnXLesuWPxubAEZmDimzBEGK7CU3tiE8YVlJXK51CnkmWuD2-jRHQsOZEd5ylWs3HArBn6CyzctAqsKvLSCmykpem5-L8bDh7RqZzz2Q",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "getUsers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1Byb2YiOmZhbHNlLCJpc0FkbWluIjpmYWxzZSwiaWQiOjE0LCJmaXJzdG5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIiwibGFzdG5hbWUiOiJCSVNBRyIsImlhdCI6MTU0MzI2NjEzOX0.3MJieujCzB-7WCfOwejK7opP_cK3rQx9S-aZNXOcZvY"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPhoto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1Byb2YiOmZhbHNlLCJpc0FkbWluIjpmYWxzZSwiaWQiOjE0LCJmaXJzdG5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIiwibGFzdG5hbWUiOiJCSVNBRyIsImlhdCI6MTU0MzI2NjEzOX0.3MJieujCzB-7WCfOwejK7opP_cK3rQx9S-aZNXOcZvY"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/user/photo/test.jpg",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"photo",
+								"test.jpg"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test",
+			"item": [
+				{
+					"name": "getTests",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1Byb2YiOmZhbHNlLCJpc0FkbWluIjpmYWxzZSwiaWQiOjE0LCJmaXJzdG5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIiwibGFzdG5hbWUiOiJCSVNBRyIsImlhdCI6MTU0MzI2NjEzOX0.3MJieujCzB-7WCfOwejK7opP_cK3rQx9S-aZNXOcZvY"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/test/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"test",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTest",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/test/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"test",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPublicTests",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1Byb2YiOmZhbHNlLCJpc0FkbWluIjpmYWxzZSwiaWQiOjE0LCJmaXJzdG5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIiwibGFzdG5hbWUiOiJCSVNBRyIsImlhdCI6MTU0MzI2NjEzOX0.3MJieujCzB-7WCfOwejK7opP_cK3rQx9S-aZNXOcZvY"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/test/public/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"test",
+								"public",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1Byb2YiOmZhbHNlLCJpc0FkbWluIjpmYWxzZSwiaWQiOjE0LCJmaXJzdG5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIiwibGFzdG5hbWUiOiJCSVNBRyIsImlhdCI6MTU0MzI2NjEzOX0.3MJieujCzB-7WCfOwejK7opP_cK3rQx9S-aZNXOcZvY"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "RC - Capitolul 5",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Testul de la curs pentru verificarea cunostintelor",
+									"type": "text"
+								},
+								{
+									"key": "duration",
+									"value": "15",
+									"type": "text"
+								},
+								{
+									"key": "questionsNumber",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "retries",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "backwards",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "isPublic",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/test",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cloneTest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1Byb2YiOmZhbHNlLCJpc0FkbWluIjpmYWxzZSwiaWQiOjE0LCJmaXJzdG5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIiwibGFzdG5hbWUiOiJCSVNBRyIsImlhdCI6MTU0MzI2NjEzOX0.3MJieujCzB-7WCfOwejK7opP_cK3rQx9S-aZNXOcZvY"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "test_id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/test/clone",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"test",
+								"clone"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTest",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "tralala",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/test",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeTest",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1Byb2YiOmZhbHNlLCJpc0FkbWluIjpmYWxzZSwiaWQiOjE0LCJmaXJzdG5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIiwibGFzdG5hbWUiOiJCSVNBRyIsImlhdCI6MTU0MzI2NjEzOX0.3MJieujCzB-7WCfOwejK7opP_cK3rQx9S-aZNXOcZvY"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/test/27",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"test",
+								"27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeTestQuestions",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "questions",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/test/question/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"test",
+								"question",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "session",
+			"item": [
+				{
+					"name": "getSessions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/session",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"session"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSession",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/session/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"session",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPublicSession",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/session/public/qdywCu",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"session",
+								"public",
+								"qdywCu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createSession",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "start_hour",
+									"value": "\"2018 12 05 01:00:00",
+									"type": "text"
+								},
+								{
+									"key": "end_hour",
+									"value": "\"2018 12 04 01:00:00",
+									"type": "text"
+								},
+								{
+									"key": "test_id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/session",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"session"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateSession",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "session_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start_hour",
+									"value": "2018 12 04 07:40:00",
+									"type": "text"
+								},
+								{
+									"key": "end_hour",
+									"value": "2018 12 06 09:50:00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/session",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"session"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forceCloseSession",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/session/close/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"session",
+								"close",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1Byb2YiOmZhbHNlLCJpc0FkbWluIjpmYWxzZSwiaWQiOjE0LCJmaXJzdG5hbWUiOiJBTEVYQU5EUlUgU1RFRkFOIiwibGFzdG5hbWUiOiJCSVNBRyIsImlhdCI6MTU0MzI2NjEzOX0.3MJieujCzB-7WCfOwejK7opP_cK3rQx9S-aZNXOcZvY",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4f69d7e3-8be9-4681-b56e-c58589255d6a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "cc44ec80-5fce-4d5d-8854-d46a57d93e62",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "ae7ef7fa-de9b-4ad4-aa52-12888eb7237b",
+			"key": "url",
+			"value": "http://localhost:3015",
+			"type": "string"
+		}
+	]
+}
