@@ -62,3 +62,37 @@ module.exports.validateGroup = async (studentData, group) => {
 
     throw new AppError('Group is not valid', 400);
 }
+
+module.exports.generateSimpleToken = (characters) => {
+
+    let stringArray = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
+        'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+        'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+        'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '!', '?'];
+
+    let token = "";
+
+    for (let i = 0; i < characters; i++) {
+        let randomNumber = Math.ceil(Math.random() * stringArray.length) - 1;
+        token += stringArray[randomNumber];
+    }
+
+    return token;
+}
+
+module.exports.simpleDateToUnixTime = (simpleDate) => {
+    //simpleDate should have the format '12 02 2015 21:15:00'
+    let unixTime = parseInt((new Date(simpleDate).getTime() / 1000).toFixed(0))
+    return unixTime;
+}
+
+module.exports.checkIfSessionIsPublic = (startDate, endDate) => {
+
+    let now = parseInt(new Date.now() / 1000).toFixed(0);
+
+    if (now >= startDate && now < endDate) {
+        return 1;
+    }
+
+    return 0;
+}
