@@ -68,7 +68,7 @@ module.exports.generateSimpleToken = (characters) => {
     let stringArray = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
         'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
         'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
-        'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '!', '?'];
+        'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '&', '@'];
 
     let token = "";
 
@@ -88,10 +88,12 @@ module.exports.simpleDateToUnixTime = (simpleDate) => {
 
 module.exports.checkIfSessionIsPublic = (startDate, endDate) => {
 
-    let now = parseInt(new Date.now() / 1000).toFixed(0);
+    let now = parseInt(Date.now() / 1000).toFixed(0);
 
     if (now >= startDate && now < endDate) {
         return 1;
+    } else if (endDate < startDate) {
+        throw new AppError('End date is lower than start date', 400);
     }
 
     return 0;

@@ -15,6 +15,7 @@ Series.hasMany(Group, { as: 'Groups' });
 Group.hasMany(User, { as: 'Users' });
 User.hasMany(Question, { as: 'Questions' });
 User.hasMany(Test, { as: 'Tests' });
+User.hasMany(Session, { as: 'Sessions' });
 User.hasMany(UserSession, { as: 'UserSessions' });
 Question.hasMany(Answer, { as: 'Answers' });
 Question.belongsToMany(Test, { through: 'test_question' });
@@ -26,6 +27,7 @@ Test.hasMany(UserSession, { as: 'UserSessions' });
 Test.belongsTo(Category);
 Test.belongsToMany(Question, { through: 'test_questions' });
 Session.hasMany(UserSession, { as: 'UserSessions' });
+Session.belongsTo(Test);
 UserSession.hasMany(Answer, { as: 'Answers' });
 UserSession.hasOne(Score, { as: 'Score' });
 

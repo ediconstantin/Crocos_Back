@@ -6,8 +6,7 @@ const AppError = require('./utils/AppError').AppError;
 const generateSimpleToken = require('./utils/helpers').generateSimpleToken;
 const simpleDateToUnixTime = require('./utils/helpers').simpleDateToUnixTime;
 const checkIfSessionIsPublic = require('./utils/helpers').checkIfSessionIsPublic;
-
-const sessionStatusTypes = [1, 2, 3];
+const sessionStatusTypes = require('./utils/constants').sessionStatusTypes;
 
 module.exports.getSessions = async (ctx) => {
 
@@ -18,9 +17,9 @@ module.exports.getSessions = async (ctx) => {
             let sessions = await Session.findAll({
                 where: {
                     user_id: ctx.state.jwtdata.id,
-                    isPublic: ctx.query.status
+                    status: ctx.query.status
                 },
-                attributes: ['start_hour', 'end_hour', 'isPublic'],
+                attributes: ['start_hour', 'end_hour', 'status'],
                 order: [
                     ['start_hour', 'DESC']
                 ]
@@ -32,44 +31,50 @@ module.exports.getSessions = async (ctx) => {
             throw new AppError('Not a valid option', 400);
         }
     } else {
-
-        let newSessions = Session.findAll({
+        let sessions = {};
+        sessions.new = Session.findAll({
             where: {
                 user_id: ctx.state.jwtdata.id,
-                isPublic: 0
+                status: 0
             },
-            attributes: ['start_hour', 'end_hour', 'isPublic'],
+            attributes: ['start_hour', 'end_hour', 'status'],
             order: [
                 ['start_hour', 'DESC']
             ]
         });
 
-        let openSessions = Session.findAll({
+        sessions.open = Session.findAll({
             where: {
                 user_id: ctx.state.jwtdata.id,
-                isPublic: 1
+                status: 1
             },
-            attributes: ['start_hour', 'end_hour', 'isPublic'],
+            attributes: ['start_hour', 'end_hour', 'status'],
             order: [
                 ['start_hour', 'DESC']
             ]
         });
 
-        let closedSessions = Session.findAll({
+        sessions.closed = Session.findAll({
             where: {
                 user_id: ctx.state.jwtdata.id,
-                isPublic: 2
+                status: 2
             },
-            attributes: ['start_hour', 'end_hour', 'isPublic'],
+            attributes: ['start_hour', 'end_hour', 'status'],
             order: [
                 ['start_hour', 'DESC']
             ]
         });
 
-        //or get all and put them in different lists by hand based on isPublic attribute
-        Promise.all([newSessions, openSessions, closedSessions])
+        //or get all and put them in different lists by hand based on status attribute
+        await Promise.all([sessions.new, sessions.open, sessions.closed])
             .then((responses) => {
-                ctx.body = [...responses[0], ...responses[1], ...responses[2]];
+
+                sessions.new = [...responses[0]];
+                sessions.open = [...responses[1]];
+                sessions.closed = [...responses[2]];
+
+                //if spread operator is used directly promises status will be sent as well
+                ctx.body = { ...sessions };
             })
     }
 }
@@ -80,7 +85,9 @@ module.exports.getSession = async (ctx) => {
         where: {
             id: ctx.params.session_id,
             user_id: ctx.state.jwtdata.id
-        }
+        },
+        attributes: { exclude: ['test_id'] },
+        include: [{ model: Test }]
     });
 
     ctx.body = session;
@@ -90,13 +97,19 @@ module.exports.getPublicSessionByToken = async (ctx) => {
 
     let session = await Session.findOne({
         where: {
-            token: req.params.token,
-            isPublic: true
+            token: ctx.params.session_token,
+            status: 1
         },
+        attributes: { exclude: ['test_id'] },
         include: [{ model: Test, attributes: ['id', 'name', 'duration', 'questionsNumber', 'retries', 'backwards'] }]
     });
 
-    ctx.body = session;
+    if (session) {
+        ctx.body = session;
+    } else {
+        throw new AppError('Session was not found', 404);
+    }
+
 }
 
 module.exports.createSession = async (ctx) => {
@@ -107,7 +120,7 @@ module.exports.createSession = async (ctx) => {
     session.token = generateSimpleToken(6);
     session.start_hour = simpleDateToUnixTime(ctx.request.body.start_hour);
     session.end_hour = simpleDateToUnixTime(ctx.request.body.end_hour);
-    session.isPublic = checkIfSessionIsPublic(session.start_hour, session.end_hour);
+    session.status = checkIfSessionIsPublic(session.start_hour, session.end_hour);
 
     await Session.create(session);
 
@@ -120,17 +133,22 @@ module.exports.updateSession = async (ctx) => {
     let session = await Session.findOne({
         where: {
             id: ctx.request.body.session_id,
-            user_id: ctx.state.jwtdate.id
+            user_id: ctx.state.jwtdata.id
         }
     });
 
-    if (session.isPublic === 0) {
-        ctx.request.body.isPublic = checkIfSessionIsPublic(ctx.request.body.start_hour, ctx.request.body.end_hour);
-        session = await session.update(ctx.request.body);
+    let sessionData = ctx.request.body;
+
+    if (session.status === 0) {
+        sessionData.start_hour = sessionData.start_hour ? simpleDateToUnixTime(sessionData.start_hour) : session.start_hour;
+        sessionData.end_hour = sessionData.end_hour ? simpleDateToUnixTime(sessionData.end_hour) : session.end_hour;
+        sessionData.status = checkIfSessionIsPublic(sessionData.start_hour, sessionData.end_hour);
+        session = await session.update(sessionData);
         ctx.body = session;
-    } else if (session.isPublic === 1) {
-        ctx.request.body.isPublic = checkIfSessionIsPublic(session.start_hour, ctx.request.body.end_hour);
-        session = await session.update({ end_hour: ctx.request.body.end_hour });
+    } else if (session.status === 1) {
+        sessionData.end_hour = sessionData.end_hour ? simpleDateToUnixTime(sessionData.end_hour) : session.end_hour;
+        sessionData.status = checkIfSessionIsPublic(session.start_hour, sessionData.end_hour);
+        session = await session.update({ end_hour: sessionData.end_hour, status: sessionData.status });
         ctx.body = session;
     } else {
         throw new AppError('Closed sessions cannot be modified.', 400);
@@ -139,15 +157,15 @@ module.exports.updateSession = async (ctx) => {
 
 module.exports.forceClose = async (ctx) => {
 
-    let end_hour = parseInt((new Date.now() / 1000).toFixed(0));
+    let end_hour = parseInt((Date.now() / 1000).toFixed(0));
     await Session.update({
-        isPublic: 0,
+        status: 2,
         end_hour: end_hour,
     },
         {
             where: {
                 id: ctx.params.session_id,
-                user_id: ctx.state.jwtdate.id
+                user_id: ctx.state.jwtdata.id
             }
         });
 
