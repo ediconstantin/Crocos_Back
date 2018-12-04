@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
             },
             'ans1': {
                 type: DataTypes.STRING,
-                allowNull: false
+                defaultValue: '#'
             },
             'ans2': {
                 type: DataTypes.STRING,
-                allowNull: false
+                defaultValue: '#'
             },
             'ans3': {
                 type: DataTypes.STRING,
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             'correct': {
                 type: DataTypes.STRING,
-                allowNull: false
+                defaultValue: '#'
             },
             'feedback': DataTypes.STRING,
             'photo': DataTypes.STRING,

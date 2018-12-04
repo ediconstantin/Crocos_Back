@@ -10,7 +10,6 @@ const UserSession = database.import('./UserSession');
 const Answer = database.import('./Answer');
 const Score = database.import('./Score');
 
-
 Series.hasMany(Group, { as: 'Groups' });
 Group.hasMany(User, { as: 'Users' });
 User.hasMany(Question, { as: 'Questions' });
