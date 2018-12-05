@@ -10,9 +10,9 @@ module.exports.getTestThroughSession = async (session_id) => {
             id: session_id
         },
         attributes: [],
-        include: {model: Test, attributes: ['id', 'questionsNumber']}
+        include: {model: Test, attributes: ['id', 'questionsNumber', 'retries']}
     });
 
-    return session.test.id;
+    return session.test;
 
 }

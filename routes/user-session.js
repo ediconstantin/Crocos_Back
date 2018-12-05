@@ -4,6 +4,7 @@ let Router = require('koa-router');
 let router = Router();
 const userSessionController = require('../controllers/user-session');
 
-router.post('/', userSessionController.createUserSession);
+router.post('/', userSessionController.createOrGetUserSession);
+//router.post('/', userSessionController.createUserSession);
 
 module.exports = router;

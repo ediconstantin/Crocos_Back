@@ -45,19 +45,18 @@ module.exports.cloneTestService = async (test_id, user_id) => {
     return clonedTest;
 }
 
-module.exports.getTestQuestions = async (test_id, questionsNumber) => {
+module.exports.getTestQuestions = async (test_id) => {
 
-    //should be returned random questionsNumber questions
     let test = await Test.findOne({
         where: {
             id: test_id,
         },
-        attributes: ['retries', 'questionsNumber'],
+        attributes: ['questionsNumber'],
         include: {
             model: Question, through: {
-                attributes: []
+                attributes: [],
             }, attributes: ['id', 'question', 'ans1', 'ans2', 'ans3', 'ans4',
-                'multiple', 'open', 'duration']
+                'multiple', 'open', 'duration'],
         },
     });
 

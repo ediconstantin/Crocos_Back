@@ -1,8 +1,8 @@
 const UserSession = require('../models').UserSession;
 const AppError = require('./utils/AppError').AppError;
-const getTestQuestions = require('./services/test').getTestQuestions;
-const getTestThroughSession = require('./services/session').getTestThroughSession;
-const validateNewUserSession = require('./services/user-session').validateNewUserSession;
+const getUserSessionData = require('./services/user-session').getUserSessionData;
+const createUserSession = require('./services/user-session').createUserSession;
+const createUserSessionQuestions = require('./services/user-session').createsUserSessionQuestions;
 
 //the method createUserSession should be transformed into a service
 //and an endpoint should be called createOrGetSession
@@ -27,29 +27,39 @@ const validateNewUserSession = require('./services/user-session').validateNewUse
 //when test time is used: if the received timestamp is lower than the user session timestamp + test duration
 //then the answer is valid, saved and the feedback is given
 
+
 //at the end of the test, a request will be made to close the user session
 //when the session closes via cron job, all associated user sessions are also closed
 //and the score is calculated taking in consideration the questions that are not "open"
 
-//problem: if a user exists when a timed question is on, how does he retrieve from the server the remaining time?
-module.exports.createUserSession = async (ctx) => {
 
-    let testMeta = await getTestThroughSession(ctx.request.body.session_id);
-    let test = await getTestQuestions(testMeta.id, testMeta.questionsNumber);
+//problem: if a user exits when a timed question is on, how does he retrieve from the server the remaining time?
+//answer: you receive the starting timestamp. generate a current timestamp on front and make the difference between them
+//same goes for the whole test, if the questions are not timed
+//a delay of 5-10 seconds should exist for question duration and also for tests
 
-    await validateNewUserSession(testId, test.retries, ctx.state.jwtdata.id);
 
-    let userSession = await UserSession.create({
-        session_id: ctx.request.body.session_id,
-        test_id: testMeta.id,
-        user_id: ctx.state.jwtdata.id
-    });
-
-    ctx.status = 201;
-    ctx.body = { questions: test.questions, userSession: { id: userSession.id } };
-}
-
+//after you select a session, you press the start button which loads
+//the start button creates or gets a user session
+//and retrieves the user session with the questions
+//after the load is finished the test is directly started
 module.exports.createOrGetUserSession = async (ctx) => {
 
+    let activeUserSession = await UserSession.findOne({
+        where: {
+            session_id: ctx.request.body.session_id,
+            user_id: ctx.state.jwtdata.id,
+            isOpen: true
+        }
+    });
 
+    if (activeUserSession) {
+        let questions = await getUserSessionData(activeUserSession);
+        ctx.body = { userSession: activeUserSession, questions: questions };
+    } else {
+        let userSession = await createUserSession(ctx.request.body.session_id, ctx.state.jwtdata.id);
+        let questions = await createUserSessionQuestions(userSession.test_id, userSession.id);
+        await userSession.update({ started: parseInt((Date.now() / 1000).toFixed(0)) });
+        ctx.body = { userSession: userSession, questions: questions };
+    }
 }
