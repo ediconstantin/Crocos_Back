@@ -5,12 +5,10 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 unique: true
             },
-            'date': DataTypes.DATEONLY,
             'start_hour': DataTypes.BIGINT(11),
             'end_hour': DataTypes.BIGINT(11),
-            'duration': DataTypes.INTEGER,
-            'isPublic': {
-                type: DataTypes.BOOLEAN,
+            'status': {
+                type: DataTypes.INTEGER(1),
                 defaultValue: 0
             }
         }, {

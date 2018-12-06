@@ -1,8 +1,11 @@
+'use strict';
+
 const Test = require('../../models').Test;
+const Question = require('../../models').Question;
 const questionService = require('./question');
+const AppError = require('../utils/AppError').AppError;
 
 let changeTestValues = (test, user_id) => {
-
     let plainTest = test.toJSON();
     delete plainTest.id;
     plainTest.user_id = user_id;
@@ -22,7 +25,6 @@ let createQuestionsArray = async (questions, user_id) => {
 }
 
 module.exports.cloneTestService = async (test_id, user_id) => {
-
     let test = await Test.findOne({
         where: {
             id: test_id,
@@ -41,4 +43,25 @@ module.exports.cloneTestService = async (test_id, user_id) => {
     await clonedTest.setQuestions(clonedQuestions);
 
     return clonedTest;
+}
+
+module.exports.getTestQuestions = async (test_id) => {
+    let test = await Test.findOne({
+        where: {
+            id: test_id,
+        },
+        attributes: ['questionsNumber'],
+        include: {
+            model: Question, through: {
+                attributes: [],
+            }, attributes: ['id', 'question', 'ans1', 'ans2', 'ans3', 'ans4',
+                'multiple', 'open', 'duration'],
+        },
+    });
+
+    if (test) {
+        return test;
+    } else {
+        throw new AppError('Test is either closed or non-existent', 400);
+    }
 }

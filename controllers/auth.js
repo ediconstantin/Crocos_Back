@@ -1,4 +1,5 @@
 'use strict';
+
 const jwt = require('jsonwebtoken');
 const User = require('../models').User;
 const jwtSecret = require('./utils/constants').jwtSecret;

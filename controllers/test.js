@@ -1,3 +1,5 @@
+'use strict';
+
 const Test = require('../models').Test;
 const Question = require('../models').Question;
 const Category = require('../models').Category;
