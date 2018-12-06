@@ -22,15 +22,14 @@ Question.belongsTo(Category);
 Category.hasMany(Question, { as: 'Questions' });
 Category.hasMany(Test, { as: 'Tests' });
 Test.hasMany(Session, { as: 'Sessions' });
-Test.hasMany(UserSession, { as: 'UserSessions' });
 Test.belongsTo(Category);
 Test.belongsToMany(Question, { through: 'test_questions' });
 Session.hasMany(UserSession, { as: 'UserSessions' });
 Session.belongsTo(Test);
 UserSession.hasMany(Answer, { as: 'Answers' });
 UserSession.hasOne(Score, { as: 'Score' });
+UserSession.belongsTo(Session);
 Answer.belongsTo(Question);
-
 
 module.exports = {
     database,

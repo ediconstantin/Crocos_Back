@@ -1,3 +1,5 @@
+'use strict';
+
 const UserSession = require('../../models').UserSession;
 const Answer = require('../../models').Answer;
 const Question = require('../../models').Question;
@@ -14,7 +16,6 @@ let createErrorMessage = (retries) => {
 }
 
 let validateNewUserSession = async (test_id, retries, user_id) => {
-
     let userSessions = await UserSession.count({
         where: {
             test_id: test_id,
@@ -28,7 +29,6 @@ let validateNewUserSession = async (test_id, retries, user_id) => {
 }
 
 module.exports.getUserSessionData = async (activeUserSession) => {
-
     let questionsMeta = await Answer.findAll({
         where: {
             user_session_id: activeUserSession.id
@@ -40,7 +40,6 @@ module.exports.getUserSessionData = async (activeUserSession) => {
         }
     });
 
-    //let questions = questionsMeta.map(value => {answer: {id: value.id, answer: value.answer }})
     return questionsMeta;
 }
 
@@ -49,7 +48,6 @@ let withdrawQuestions = (questions, questionsNumber) => {
 }
 
 module.exports.createUserSession = async (session_id, user_id) => {
-
     let testMeta = await getTestThroughSession(session_id);
 
     await validateNewUserSession(testMeta.id, testMeta.retries, user_id);
@@ -66,7 +64,6 @@ module.exports.createUserSession = async (session_id, user_id) => {
 }
 
 module.exports.createsUserSessionQuestions = async (testId, userSessionId) => {
-
     let test = await getTestQuestions(testId);
 
     let questions = withdrawQuestions(shuffleArray(test.questions), test.questionsNumber);

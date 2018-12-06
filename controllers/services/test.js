@@ -1,10 +1,11 @@
+'use strict';
+
 const Test = require('../../models').Test;
 const Question = require('../../models').Question;
 const questionService = require('./question');
 const AppError = require('../utils/AppError').AppError;
 
 let changeTestValues = (test, user_id) => {
-
     let plainTest = test.toJSON();
     delete plainTest.id;
     plainTest.user_id = user_id;
@@ -24,7 +25,6 @@ let createQuestionsArray = async (questions, user_id) => {
 }
 
 module.exports.cloneTestService = async (test_id, user_id) => {
-
     let test = await Test.findOne({
         where: {
             id: test_id,
@@ -46,7 +46,6 @@ module.exports.cloneTestService = async (test_id, user_id) => {
 }
 
 module.exports.getTestQuestions = async (test_id) => {
-
     let test = await Test.findOne({
         where: {
             id: test_id,

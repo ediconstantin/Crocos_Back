@@ -6,7 +6,6 @@ const User = require('../../models').User;
 const AppError = require('./AppError').AppError;
 
 let uniqueEmail = async (email) => {
-
     let unique = await User.findOne({
         where: {
             email: email
@@ -23,7 +22,6 @@ let uniqueEmail = async (email) => {
 }
 
 module.exports.validateEmail = async (token) => {
-
     let userData = {};
     let googleResponse = await axios.get("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + token);
 
@@ -47,7 +45,6 @@ module.exports.validateEmail = async (token) => {
 }
 
 module.exports.validateGroup = async (studentData, group) => {
-
     let foundGroup = await Group.findOne({
         where: {
             name: group
@@ -64,7 +61,6 @@ module.exports.validateGroup = async (studentData, group) => {
 }
 
 module.exports.generateSimpleToken = (characters) => {
-
     let stringArray = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
         'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
         'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
@@ -87,7 +83,6 @@ module.exports.simpleDateToUnixTime = (simpleDate) => {
 }
 
 module.exports.checkIfSessionIsPublic = (startDate, endDate) => {
-
     let now = parseInt(Date.now() / 1000).toFixed(0);
 
     if (now >= startDate && now < endDate) {

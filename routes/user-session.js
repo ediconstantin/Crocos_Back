@@ -1,10 +1,11 @@
 'use strict';
 
-let Router = require('koa-router');
-let router = Router();
+const Router = require('koa-router');
+const router = Router();
 const userSessionController = require('../controllers/user-session');
 
+router.get('/', userSessionController.getActiveUserSession);
+router.get('/started/:session_id', userSessionController.getStartingTime);
 router.post('/', userSessionController.createOrGetUserSession);
-//router.post('/', userSessionController.createUserSession);
 
 module.exports = router;
