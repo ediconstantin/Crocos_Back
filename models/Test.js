@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.BOOLEAN,
                 defaultValue: 0
             },
+            'feedback': {
+                type: DataTypes.INTEGER(1),
+                defaultValue: 1
+            },
             'isPublic': {
                 type: DataTypes.BOOLEAN,
                 defaultValue: 0
