@@ -98,13 +98,13 @@ module.exports.validateUserSession = async (userSessionId, userId) => {
             user_id: userId,
             isOpen: 1
         },
-        include: { model: Session, include: { model: Test, attributes: ['duration', 'feedback'] } }
+        include: { model: Session, attributes: ['strict_timed'], include: { model: Test, attributes: ['duration', 'feedback'] } }
     });
 
     //if the cron job will handle the closing of a user session the second validation is not needed anymore
-    if (!userSession || (userSession.session.test.duration != 0 && userSession.started + userSession.session.test.duration + 30 < parseInt((Date.now() / 1000).toFixed(0)))) {
+    if (!userSession || (userSession.session.strict_timed && userSession.started + userSession.session.test.duration + 30 < parseInt((Date.now() / 1000).toFixed(0)))) {
         throw new AppError('The answer doesn\'t belong to an open user-session', 400);
     }
 
-    return userSession.session.test.feedback;
+    return { liveFeedback: userSession.session.test.feedback, strictTimed: userSession.session.strict_timed };
 }

@@ -2,8 +2,8 @@ const Answer = require('../../models').Answer;
 const Question = require('../../models').Question;
 const AppError = require('../utils/AppError').AppError;
 
-module.exports.validateAnswer = (started, duration) => {
-    if (duration && (started + duration + 15 < parseInt(Date.now() / 1000).toFixed(0))) {
+module.exports.validateAnswer = (strictTimed, started, duration) => {
+    if (!strictTimed && (started + duration + 15 < parseInt(Date.now() / 1000).toFixed(0))) {
         throw new AppError('The answer time has expired', 400);
     }
 }

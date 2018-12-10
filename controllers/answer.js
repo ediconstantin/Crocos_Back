@@ -20,12 +20,12 @@ module.exports.updateAnswer = async (ctx, next) => {
         throw new AppError('Answer unavailable', 400);
     }
 
-    let liveFeedback = await validateUserSession(answer.user_session_id, ctx.state.jwtdata.id);
-    validateAnswer(answer.started, answer.question.duration);
+    let testOptions = await validateUserSession(answer.user_session_id, ctx.state.jwtdata.id);
+    validateAnswer(testOptions.strictTimed, answer.started, answer.question.duration);
 
     await answer.update({ answer: ctx.request.body.answer });
 
-    ctx.body = getFeedback(liveFeedback, answer.question);
+    ctx.body = getFeedback(testOptions.liveFeedback, answer.question);
 }
 
 module.exports.startTiming = async (ctx) => {

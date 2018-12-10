@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
             },
             'start_hour': DataTypes.BIGINT(11),
             'end_hour': DataTypes.BIGINT(11),
+            'strict_timed': {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true
+            },
             'status': {
                 type: DataTypes.INTEGER(1),
                 defaultValue: 0
