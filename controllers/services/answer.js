@@ -1,5 +1,5 @@
-const Answer = require('../../models').Answer;
-const Question = require('../../models').Question;
+'use strict';
+
 const AppError = require('../utils/AppError').AppError;
 
 module.exports.validateAnswer = (strictTimed, started, duration) => {
@@ -12,7 +12,6 @@ module.exports.getFeedback = (liveFeedback, question) => {
     if (liveFeedback === 1) {
         let feedback = { correct: question.correct, feedback: question.feedback };
         return { feedback: feedback };
-
     } else {
         return { message: 'Answer updated!' };
     }

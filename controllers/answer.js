@@ -1,3 +1,5 @@
+'use strict';
+
 const Answer = require('../models').Answer;
 const Question = require('../models').Question;
 const validateUserSession = require('./services/user-session').validateUserSession;
@@ -7,7 +9,6 @@ const getFeedback = require('./services/answer').getFeedback;
 
 //with parameter for force-closing the user-session or different endpoint??
 module.exports.updateAnswer = async (ctx, next) => {
-
     let answer = await Answer.findOne({
         where: {
             id: ctx.request.body.answer_id,
@@ -29,7 +30,6 @@ module.exports.updateAnswer = async (ctx, next) => {
 }
 
 module.exports.startTiming = async (ctx) => {
-
     let answer = await Answer.findOne({
         where: {
             id: ctx.request.body.answer_id,
