@@ -3,6 +3,8 @@
 const UserSession = require('../../models').UserSession;
 const Answer = require('../../models').Answer;
 const Question = require('../../models').Question;
+const Session = require('../../models').Session;
+const Test = require('../../models').Test;
 const AppError = require('../utils/AppError').AppError;
 const getTestQuestions = require('./test').getTestQuestions;
 const getTestThroughSession = require('./session').getTestThroughSession;
@@ -86,4 +88,23 @@ module.exports.createsUserSessionQuestions = async (testId, userSessionId) => {
     });
 
     return questionsMeta;
+}
+
+module.exports.validateUserSession = async (userSessionId, userId) => {
+
+    let userSession = await UserSession.findOne({
+        where: {
+            id: userSessionId,
+            user_id: userId,
+            isOpen: 1
+        },
+        include: { model: Session, attributes: ['strict_timed'], include: { model: Test, attributes: ['duration', 'feedback'] } }
+    });
+
+    //if the cron job will handle the closing of a user session the second validation is not needed anymore
+    if (!userSession || (userSession.session.strict_timed && userSession.started + userSession.session.test.duration + 30 < parseInt((Date.now() / 1000).toFixed(0)))) {
+        throw new AppError('The answer doesn\'t belong to an open user-session', 400);
+    }
+
+    return { liveFeedback: userSession.session.test.feedback, strictTimed: userSession.session.strict_timed };
 }

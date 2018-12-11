@@ -13,11 +13,12 @@ const fs = require('fs');
 const logger = require('koa-logger');
 const morgan = require('koa-morgan');
 
-const userRouter = require('./routes/user.js');
-const questionRouter = require('./routes/question.js');
-const testRouter = require('./routes/test.js');
-const sessionRouter = require('./routes/session.js');
+const userRouter = require('./routes/user');
+const questionRouter = require('./routes/question');
+const testRouter = require('./routes/test');
+const sessionRouter = require('./routes/session');
 const userSessionRouter = require('./routes/user-session');
+const answerRouter = require('./routes/answer');
 const middleware = require('./controllers/middleware');
 const auth = require('./controllers/auth');
 const jwtSecret = require('./controllers/utils/constants').jwtSecret;
@@ -53,13 +54,15 @@ questionRouter.prefix('/question');
 testRouter.prefix('/test');
 sessionRouter.prefix('/session');
 userSessionRouter.prefix('/user-session');
+answerRouter.prefix('/answer');
 
 const combinedRouters = combineRouters(
     userRouter,
     questionRouter,
     testRouter,
     sessionRouter,
-    userSessionRouter
+    userSessionRouter,
+    answerRouter
 );
 
 app.use(combinedRouters());
