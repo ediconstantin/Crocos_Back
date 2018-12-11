@@ -6,6 +6,7 @@ const userSessionController = require('../controllers/user-session');
 
 router.get('/', userSessionController.getActiveUserSession);
 router.get('/started/:session_id', userSessionController.getStartingTime);
+router.get('/feedback/:user_session_id', userSessionController.getFeedback);
 router.post('/', userSessionController.createOrGetUserSession);
 
 module.exports = router;
