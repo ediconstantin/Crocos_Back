@@ -48,8 +48,6 @@ module.exports.login = async (ctx) => {
                 groupId: user.groupId, firstname: user.firstname, lastname: user.lastname
             },
                 jwtSecret),
-            firstname: user.firstname,
-            lastname: user.lastname,
             group: group.name,
             series: series.name,
             isAdmin: user.isAdmin,
