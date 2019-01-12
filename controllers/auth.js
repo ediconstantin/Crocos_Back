@@ -28,7 +28,7 @@ module.exports.register = async (ctx) => {
 }
 
 module.exports.login = async (ctx) => {
-
+    
     let googleResponse = await axios.get("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + ctx.request.body.token);
 
     let user = await User.findOne({
@@ -36,6 +36,9 @@ module.exports.login = async (ctx) => {
             email: googleResponse.data.email
         }
     });
+
+    let group = await user.getGroup();
+    let series = await group.getSeries();
 
     if (user) {
         ctx.status = 200;
@@ -45,7 +48,13 @@ module.exports.login = async (ctx) => {
                 groupId: user.groupId, firstname: user.firstname, lastname: user.lastname
             },
                 jwtSecret),
-            message: 'Login successfull'
+            firstname: user.firstname,
+            lastname: user.lastname,
+            group: group.name,
+            series: series.name,
+            isAdmin: user.isAdmin,
+            isProf: user.isProf,
+            isActive: user.isActive
         }
     } else {
         throw new AppError('You are not registered', 403);
