@@ -12,10 +12,12 @@ const Score = database.import('./Score');
 
 Series.hasMany(Group, { as: 'Groups' });
 Group.hasMany(User, { as: 'Users' });
+Group.belongsTo(Series);
 User.hasMany(Question, { as: 'Questions' });
 User.hasMany(Test, { as: 'Tests' });
 User.hasMany(Session, { as: 'Sessions' });
 User.hasMany(UserSession, { as: 'UserSessions' });
+User.belongsTo(Group);
 Question.hasMany(Answer, { as: 'answers' });
 Question.belongsToMany(Test, { through: 'test_question' });
 Question.belongsTo(Category);
