@@ -28,7 +28,7 @@ module.exports.register = async (ctx) => {
 }
 
 module.exports.login = async (ctx) => {
-    
+
     let googleResponse = await axios.get("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + ctx.request.body.token);
 
     let user = await User.findOne({
@@ -37,10 +37,9 @@ module.exports.login = async (ctx) => {
         }
     });
 
-    let group = await user.getGroup();
-    let series = await group.getSeries();
-
     if (user) {
+        let group = await user.getGroup();
+        let series = await group.getSeries();
         ctx.status = 200;
         ctx.body = {
             token: jwt.sign({

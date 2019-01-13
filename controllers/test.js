@@ -69,10 +69,10 @@ module.exports.createTest = async (ctx) => {
 
     ctx.request.body.user_id = ctx.state.jwtdata.id;
 
-    await Test.create(ctx.request.body);
+    let test = await Test.create(ctx.request.body);
 
     ctx.status = 201;
-    ctx.body = { message: 'The test was created' };
+    ctx.body = { testId: test.id };
 
 }
 

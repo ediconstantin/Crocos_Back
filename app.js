@@ -19,6 +19,7 @@ const testRouter = require('./routes/test');
 const sessionRouter = require('./routes/session');
 const userSessionRouter = require('./routes/user-session');
 const answerRouter = require('./routes/answer');
+const categoryRouter = require('./routes/category');
 const middleware = require('./controllers/middleware');
 const auth = require('./controllers/auth');
 const jwtSecret = require('./controllers/utils/constants').jwtSecret;
@@ -55,6 +56,7 @@ testRouter.prefix('/test');
 sessionRouter.prefix('/session');
 userSessionRouter.prefix('/user-session');
 answerRouter.prefix('/answer');
+categoryRouter.prefix('/category');
 
 const combinedRouters = combineRouters(
     userRouter,
@@ -62,7 +64,8 @@ const combinedRouters = combineRouters(
     testRouter,
     sessionRouter,
     userSessionRouter,
-    answerRouter
+    answerRouter,
+    categoryRouter
 );
 
 app.use(combinedRouters());
