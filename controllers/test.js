@@ -147,5 +147,5 @@ module.exports.addQuestionToTest = async (ctx) => {
     await test.addQuestion(question);
 
     ctx.status = 200;
-    ctx.body({message: "OK"});
+    ctx.body = { message: "OK" };
 }
