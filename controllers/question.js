@@ -77,8 +77,6 @@ module.exports.removeQuestion = async (ctx) => {
 
 module.exports.createAndAppendtoTest = async(ctx) => {
 
-    ctx.request.body.user_id = ctx.state.jwtdata.id;
-
     let question = await Question.create(ctx.request.body);
 
     let test = await Test.findOne({
