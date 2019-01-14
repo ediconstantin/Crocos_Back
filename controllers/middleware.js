@@ -25,6 +25,7 @@ module.exports.errorHandling = async (ctx, next) => {
         } else {
             ctx.status = 500;
             ctx.body = {message: 'Server Error'};
+            console.log(err.message);
         }
     }
 }
