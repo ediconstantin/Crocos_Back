@@ -123,7 +123,7 @@ module.exports.removeQuestionFromTest = async (ctx) => {
         }
     })
 
-    await test.removeQuestion(questions);
+    await test.removeQuestion(question);
 
     ctx.status = 200;
     ctx.body = { message: 'Questions were deleted from test' };
