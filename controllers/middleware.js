@@ -22,11 +22,9 @@ module.exports.errorHandling = async (ctx, next) => {
         if (err instanceof AppError) {
             ctx.status = err.code;
             ctx.body = {message: err.message};
-            console.log(err);
         } else {
             ctx.status = 500;
             ctx.body = {message: 'Server Error'};
-            console.log(err);
         }
     }
 }
