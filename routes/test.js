@@ -13,6 +13,7 @@ router.get('/public/user/:user_id', testController.getPublicTests);
 router.get('/public/:test_id', testController.getPublicTest);
 
 router.post('/', testController.createTest);
+router.post('/question/:test_id', testController.addQuestionToTest);
 router.post('/clone', testController.cloneTest);
 
 router.put('/', testController.updateTest);

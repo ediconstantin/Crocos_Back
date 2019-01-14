@@ -2,6 +2,7 @@
 
 const Question = require('../models').Question;
 const Category = require('../models').Category;
+const Test = require('../models').Test;
 const AppError = require('./utils/AppError').AppError;
 
 module.exports.getQuestions = async (ctx) => {
@@ -72,4 +73,23 @@ module.exports.removeQuestion = async (ctx) => {
     } else {
         throw new AppError('Not found', 404);
     }
+}
+
+module.exports.createAndAppendtoTest = async(ctx) => {
+
+    ctx.request.body.user_id = ctx.state.jwtdata.id;
+
+    let question = await Question.create(ctx.request.body);
+
+    let test = await Test.findOne({
+        where: {
+            id: ctx.params.test_id,
+            user_id: ctx.state.jwtdata.id
+        }
+    });
+
+    await question.addTest(test);
+
+    ctx.status = 201;
+    ctx.body = { message: 'Question created' }
 }

@@ -127,3 +127,24 @@ module.exports.removeQuestionsFromTest = async (ctx) => {
 
     ctx.body = { message: 'Questions were deleted from test' };
 }
+
+module.exports.addQuestionToTest = async (ctx) => {
+    
+    let test = await Test.findOne({
+        where: {
+            id: ctx.params.test_id,
+            user_id: ctx.state.jwtdata.id
+        }
+    });
+
+    let question = await Question.findOne({
+        where: {
+            id: ctx.request.body.questionId
+        }
+    });
+
+    await test.addQuestion(question);
+
+    ctx.status(200);
+    ctx.body({message: "OK"});
+}
