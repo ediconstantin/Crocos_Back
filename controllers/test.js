@@ -69,10 +69,10 @@ module.exports.createTest = async (ctx) => {
 
     ctx.request.body.user_id = ctx.state.jwtdata.id;
 
-    await Test.create(ctx.request.body);
+    let test = await Test.create(ctx.request.body);
 
     ctx.status = 201;
-    ctx.body = { message: 'The test was created' };
+    ctx.body = { testId: test.id };
 
 }
 
@@ -126,4 +126,25 @@ module.exports.removeQuestionsFromTest = async (ctx) => {
     await test.removeQuestions(questions);
 
     ctx.body = { message: 'Questions were deleted from test' };
+}
+
+module.exports.addQuestionToTest = async (ctx) => {
+    
+    let test = await Test.findOne({
+        where: {
+            id: ctx.params.test_id,
+            user_id: ctx.state.jwtdata.id
+        }
+    });
+
+    let question = await Question.findOne({
+        where: {
+            id: ctx.request.body.questionId
+        }
+    });
+
+    await test.addQuestion(question);
+
+    ctx.status(200);
+    ctx.body({message: "OK"});
 }
