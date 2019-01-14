@@ -91,5 +91,5 @@ module.exports.createAndAppendtoTest = async(ctx) => {
     await question.addTest(test);
 
     ctx.status = 201;
-    ctx.body = { message: 'Question created' }
+    ctx.body = { questionId: question.id }
 }
