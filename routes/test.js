@@ -19,6 +19,6 @@ router.post('/clone', testController.cloneTest);
 router.put('/', testController.updateTest);
 
 router.delete('/:test_id', testController.removeTest);
-router.delete('/question/:test_id', testController.removeQuestionsFromTest);
+router.delete('/question/:test_id/:question_id', testController.removeQuestionFromTest);
 
 module.exports = router;

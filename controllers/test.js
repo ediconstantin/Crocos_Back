@@ -108,7 +108,7 @@ module.exports.removeTest = async (ctx) => {
     ctx.body = { message: 'The test was deleted' };
 }
 
-module.exports.removeQuestionsFromTest = async (ctx) => {
+module.exports.removeQuestionFromTest = async (ctx) => {
 
     let test = await Test.findOne({
         where: {
@@ -117,14 +117,15 @@ module.exports.removeQuestionsFromTest = async (ctx) => {
         }
     });
 
-    let questions = await Question.findAll({
+    let question = await Question.findOne({
         where: {
-            id: ctx.request.body.questions,
+            id: ctx.params.question_id,
         }
     })
 
-    await test.removeQuestions(questions);
+    await test.removeQuestion(questions);
 
+    ctx.status = 200;
     ctx.body = { message: 'Questions were deleted from test' };
 }
 
