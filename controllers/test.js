@@ -12,7 +12,10 @@ module.exports.getTests = async (ctx) => {
             user_id: ctx.state.jwtdata.id
         },
         attributes: { exclude: ['category_id', 'user_id'] },
-        include: [{ model: Category, attributes: ['id', 'name'] }]
+        include: [
+            { model: Category, attributes: ['id', 'name'] },
+            { model: Question, through: { attributes: [] } }
+        ]
     });
 
     ctx.body = tests;
@@ -130,7 +133,7 @@ module.exports.removeQuestionFromTest = async (ctx) => {
 }
 
 module.exports.addQuestionToTest = async (ctx) => {
-    
+
     let test = await Test.findOne({
         where: {
             id: ctx.params.test_id,
