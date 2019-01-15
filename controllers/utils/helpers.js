@@ -2,6 +2,7 @@
 
 const axios = require('axios');
 const Group = require('../../models').Group;
+const Score = require('../../models').Score;
 const User = require('../../models').User;
 const AppError = require('./AppError').AppError;
 
@@ -105,6 +106,26 @@ module.exports.shuffleArray = (array) => {
 
 module.exports.calculateScore = async (userSession) => {
 
-    //aici e naspa tare
+    let answers = await userSession.getAnswers();
+
+    let score = 0;
+
+    await answers.map(async answer => {
+
+        let question = await Question.findOne({
+            where:{
+                id: answers.question_id
+            }
+        });
+
+        if(question[answer.answer] === question[question.correct]){
+            score++;
+        }
+    });
+
+    await Score.create({
+            score: score,
+            user_session_id : userSession.id
+    });
 
 }

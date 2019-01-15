@@ -99,3 +99,17 @@ module.exports.getFeedback = async (ctx) => {
         }
     }
 }
+
+module.exports.getUserSessionDetails = async (ctx) => {
+
+    if(ctx.state.jwtdata.isProf){
+        
+
+
+    } else {
+
+
+
+    }
+
+}
