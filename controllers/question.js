@@ -77,9 +77,7 @@ module.exports.removeQuestion = async (ctx) => {
 
 module.exports.createAndAppendtoTest = async(ctx) => {
 
-    ctx.request.body.user_id = ctx.state.jwtdata.id;
-
-    let question = await Question.create(ctx.request.body);
+    let question = await Question.create({...ctx.request.body, user_id: ctx.state.jwtdata.id});
 
     let test = await Test.findOne({
         where: {
@@ -91,5 +89,5 @@ module.exports.createAndAppendtoTest = async(ctx) => {
     await question.addTest(test);
 
     ctx.status = 201;
-    ctx.body = { message: 'Question created' }
+    ctx.body = { questionId: question.id }
 }

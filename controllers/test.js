@@ -12,7 +12,10 @@ module.exports.getTests = async (ctx) => {
             user_id: ctx.state.jwtdata.id
         },
         attributes: { exclude: ['category_id', 'user_id'] },
-        include: [{ model: Category, attributes: ['id', 'name'] }]
+        include: [
+            { model: Category, attributes: ['id', 'name'] },
+            { model: Question, through: { attributes: [] } }
+        ]
     });
 
     ctx.body = tests;
@@ -108,7 +111,7 @@ module.exports.removeTest = async (ctx) => {
     ctx.body = { message: 'The test was deleted' };
 }
 
-module.exports.removeQuestionsFromTest = async (ctx) => {
+module.exports.removeQuestionFromTest = async (ctx) => {
 
     let test = await Test.findOne({
         where: {
@@ -117,19 +120,20 @@ module.exports.removeQuestionsFromTest = async (ctx) => {
         }
     });
 
-    let questions = await Question.findAll({
+    let question = await Question.findOne({
         where: {
-            id: ctx.request.body.questions,
+            id: ctx.params.question_id,
         }
     })
 
-    await test.removeQuestions(questions);
+    await test.removeQuestion(question);
 
+    ctx.status = 200;
     ctx.body = { message: 'Questions were deleted from test' };
 }
 
 module.exports.addQuestionToTest = async (ctx) => {
-    
+
     let test = await Test.findOne({
         where: {
             id: ctx.params.test_id,
@@ -145,6 +149,6 @@ module.exports.addQuestionToTest = async (ctx) => {
 
     await test.addQuestion(question);
 
-    ctx.status(200);
-    ctx.body({message: "OK"});
+    ctx.status = 200;
+    ctx.body = { message: "OK" };
 }
