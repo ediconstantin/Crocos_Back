@@ -24,6 +24,10 @@ const middleware = require('./controllers/middleware');
 const auth = require('./controllers/auth');
 const jwtSecret = require('./controllers/utils/constants').jwtSecret;
 const accessLogStream = fs.createWriteStream(__dirname + '/access.log', { flags: 'a' });
+const cron = require('node-cron');
+
+const Session = require("./models").Session;
+const calculateScore = require('./controllers/utils/helpers').calculateScore;
 
 const app = new Koa();
 const router = new Router();
@@ -69,6 +73,53 @@ const combinedRouters = combineRouters(
 );
 
 app.use(combinedRouters());
+
+/*
+cron.schedule("* * * * *", function(){
+    console.log("I run");
+    let time = Math.floor(new Date() / 1000);
+
+    let openSessions = Session.getAll({
+        where:{
+            start_hour: time
+        }
+    });
+
+    let closeSessions = Session.getAll({
+        where:{
+            end_hour: time
+        }
+    });
+
+    Promise.all([openSessions, closeSessions], response => {
+
+        toOpenSessions = response[0];
+        toCloseSessions = response[1];
+
+        toOpenSessions.map(session => {
+            session.status = 2;
+            session.save();
+        })
+
+        toCloseSessions.map(async session => {
+
+            session.status = 3;
+            session.save();
+
+            let toCloseUserSessions = await session.getUserSessions();
+
+            toCloseUserSessions.map(userSession => {
+                userSession.isOpen = false;
+                calculateScore(userSession);
+                userSession.save();
+            })
+
+        })
+
+    });
+
+});
+*/
 
 app.listen(PORT, () => {
     console.log('nairu back-end');

@@ -2,6 +2,7 @@
 
 const Session = require('../models').Session;
 const Test = require('../models').Test;
+const UserSession = require('../models').UserSession;
 const AppError = require('./utils/AppError').AppError;
 const generateSimpleToken = require('./utils/helpers').generateSimpleToken;
 const simpleDateToUnixTime = require('./utils/helpers').simpleDateToUnixTime;
@@ -30,7 +31,7 @@ module.exports.getSessions = async (ctx) => {
         } else {
             throw new AppError('Not a valid option', 400);
         }
-    } else {
+    } else if(ctx.query.sorted) {
         let sessions = {};
         sessions.new = Session.findAll({
             where: {
@@ -40,7 +41,8 @@ module.exports.getSessions = async (ctx) => {
             attributes: ['start_hour', 'end_hour', 'status'],
             order: [
                 ['start_hour', 'DESC']
-            ]
+            ], 
+            include: [{model: Test, attributes: ['name']}]
         });
 
         sessions.open = Session.findAll({
@@ -51,7 +53,8 @@ module.exports.getSessions = async (ctx) => {
             attributes: ['start_hour', 'end_hour', 'status'],
             order: [
                 ['start_hour', 'DESC']
-            ]
+            ],
+            include: [{model: Test, attributes: ['name']}]
         });
 
         sessions.closed = Session.findAll({
@@ -62,7 +65,8 @@ module.exports.getSessions = async (ctx) => {
             attributes: ['start_hour', 'end_hour', 'status'],
             order: [
                 ['start_hour', 'DESC']
-            ]
+            ], 
+            include: [{model: Test, attributes: ['name']}]
         });
 
         //or get all and put them in different lists by hand based on status attribute
@@ -76,6 +80,19 @@ module.exports.getSessions = async (ctx) => {
                 //if spread operator is used directly promises status will be sent as well
                 ctx.body = { ...sessions };
             })
+    } else {
+        let sessions = await Session.findAll({
+            where: {
+                user_id: ctx.state.jwtdata.id,
+            },
+            attributes: ['id', 'start_hour', 'end_hour', 'status'],
+            order: [
+                ['start_hour', 'DESC']
+            ], 
+            include: [{model: Test, attributes: ['name']}]
+        });
+
+        ctx.body = sessions;
     }
 }
 
@@ -88,6 +105,20 @@ module.exports.getSession = async (ctx) => {
         },
         attributes: { exclude: ['test_id'] },
         include: [{ model: Test }]
+    });
+
+    ctx.body = session;
+}
+
+module.exports.getSessionWithUserSessions = async (ctx) => {
+
+    let session = await Session.findOne({
+        where: {
+            id: ctx.params.session_id,
+            user_id: ctx.state.jwtdata.id
+        },
+        attributes: ["id"],
+        include: [{model: UserSession}]
     });
 
     ctx.body = session;

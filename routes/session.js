@@ -11,6 +11,7 @@ router.get('/public/:session_token', sessionController.getPublicSessionByToken);
 
 router.get('/', sessionController.getSessions);
 router.get('/:session_id', sessionController.getSession);
+router.get('/full/:session_id', sessionController.getSessionWithUserSessions);
 
 router.post('/', sessionController.createSession);
 

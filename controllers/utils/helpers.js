@@ -102,3 +102,9 @@ module.exports.shuffleArray = (array) => {
 
     return array;
 }
+
+module.exports.calculateScore = async (userSession) => {
+
+    //aici e naspa tare
+
+}
