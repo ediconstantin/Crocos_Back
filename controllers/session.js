@@ -212,3 +212,16 @@ module.exports.forceClose = async (ctx) => {
 
     ctx.body = { message: 'The session was forced closed' };
 }
+
+module.exports.deleteSession = async (ctx) => {
+
+    await Session.delete({
+            where: {
+                id: ctx.params.session_id,
+                user_id: ctx.state.jwtdata.id,
+                status: 0
+            }
+        });
+
+    ctx.body = { message: 'Deleted' };
+}

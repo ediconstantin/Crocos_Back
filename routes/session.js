@@ -18,4 +18,6 @@ router.post('/', sessionController.createSession);
 router.put('/', sessionController.updateSession);
 router.put('/close/:session_id', sessionController.forceClose);
 
+router.delete('/:session_id', sessionController.deleteSession);
+
 module.exports = router;
