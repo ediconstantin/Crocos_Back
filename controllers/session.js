@@ -215,7 +215,7 @@ module.exports.forceClose = async (ctx) => {
 
 module.exports.deleteSession = async (ctx) => {
 
-    await Session.delete({
+    await Session.destroy({
             where: {
                 id: ctx.params.session_id,
                 user_id: ctx.state.jwtdata.id,
