@@ -31,6 +31,7 @@ Session.belongsTo(Test);
 UserSession.hasMany(Answer, { as: 'answers' });
 UserSession.hasOne(Score, { as: 'Score' });
 UserSession.belongsTo(Session);
+UserSession.belongsTo(User);
 Answer.belongsTo(Question);
 
 module.exports = {

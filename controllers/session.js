@@ -8,6 +8,8 @@ const generateSimpleToken = require('./utils/helpers').generateSimpleToken;
 const simpleDateToUnixTime = require('./utils/helpers').simpleDateToUnixTime;
 const checkIfSessionIsPublic = require('./utils/helpers').checkIfSessionIsPublic;
 const sessionStatusTypes = require('./utils/constants').sessionStatusTypes;
+const User = require('../models').User;
+const Group = require('../models').Group;
 
 module.exports.getSessions = async (ctx) => {
 
@@ -31,7 +33,7 @@ module.exports.getSessions = async (ctx) => {
         } else {
             throw new AppError('Not a valid option', 400);
         }
-    } else if(ctx.query.sorted) {
+    } else if (ctx.query.sorted) {
         let sessions = {};
         sessions.new = Session.findAll({
             where: {
@@ -41,8 +43,8 @@ module.exports.getSessions = async (ctx) => {
             attributes: ['start_hour', 'end_hour', 'status'],
             order: [
                 ['start_hour', 'DESC']
-            ], 
-            include: [{model: Test, attributes: ['name']}]
+            ],
+            include: [{ model: Test, attributes: ['name'] }]
         });
 
         sessions.open = Session.findAll({
@@ -54,7 +56,7 @@ module.exports.getSessions = async (ctx) => {
             order: [
                 ['start_hour', 'DESC']
             ],
-            include: [{model: Test, attributes: ['name']}]
+            include: [{ model: Test, attributes: ['name'] }]
         });
 
         sessions.closed = Session.findAll({
@@ -65,8 +67,8 @@ module.exports.getSessions = async (ctx) => {
             attributes: ['start_hour', 'end_hour', 'status'],
             order: [
                 ['start_hour', 'DESC']
-            ], 
-            include: [{model: Test, attributes: ['name']}]
+            ],
+            include: [{ model: Test, attributes: ['name'] }]
         });
 
         //or get all and put them in different lists by hand based on status attribute
@@ -88,8 +90,8 @@ module.exports.getSessions = async (ctx) => {
             attributes: ['id', 'start_hour', 'end_hour', 'status'],
             order: [
                 ['start_hour', 'DESC']
-            ], 
-            include: [{model: Test, attributes: ['name']}]
+            ],
+            include: [{ model: Test, attributes: ['name'] }]
         });
 
         ctx.body = sessions;
@@ -117,8 +119,16 @@ module.exports.getSessionWithUserSessions = async (ctx) => {
             id: ctx.params.session_id,
             user_id: ctx.state.jwtdata.id
         },
-        attributes: ["id"],
-        include: [{model: UserSession}]
+        attributes: ['id'],
+        include: [
+            { model: UserSession, attributes:['id'], include: [
+                {
+                    model:User, attributes:['firstname', 'lastname'], include:[
+                    {
+                        model:Group, attributes: ['name']}
+                ]}
+            ]}
+        ]
     });
 
     ctx.body = session;
