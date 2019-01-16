@@ -127,5 +127,4 @@ module.exports.calculateScore = async (userSession) => {
             score: score,
             user_session_id : userSession.id
     });
-
 }

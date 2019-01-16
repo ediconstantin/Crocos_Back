@@ -25,6 +25,7 @@ const auth = require('./controllers/auth');
 const jwtSecret = require('./controllers/utils/constants').jwtSecret;
 const accessLogStream = fs.createWriteStream(__dirname + '/access.log', { flags: 'a' });
 const cron = require('node-cron');
+const cors = require("koa-cors");
 
 const Session = require("./models").Session;
 const calculateScore = require('./controllers/utils/helpers').calculateScore;
@@ -34,6 +35,8 @@ const router = new Router();
 
 //this will be removed probably
 sequelize.database.sync();
+
+app.use(cors());
 
 app.use(bodyParser());
 app.use(morgan({ format: 'combined', stream: accessLogStream }));
