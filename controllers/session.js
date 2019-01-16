@@ -121,7 +121,7 @@ module.exports.getSessionWithUserSessions = async (ctx) => {
         },
         attributes: ['id'],
         include: [
-            { model: UserSession, attributes:['id'], include: [
+            { model: UserSession, as:"UserSessions", attributes:['id'], include: [
                 {
                     model:User, attributes:['firstname', 'lastname'], include:[
                     {

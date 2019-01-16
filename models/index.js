@@ -26,7 +26,7 @@ Category.hasMany(Test, { as: 'Tests' });
 Test.hasMany(Session, { as: 'Sessions' });
 Test.belongsTo(Category);
 Test.belongsToMany(Question, { through: 'test_questions' });
-Session.hasMany(UserSession);
+Session.hasMany(UserSession, {as: "UserSessions"});
 Session.belongsTo(Test);
 UserSession.hasMany(Answer, { as: 'answers' });
 UserSession.hasOne(Score, { as: 'Score' });

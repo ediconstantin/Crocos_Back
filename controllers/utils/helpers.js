@@ -114,11 +114,11 @@ module.exports.calculateScore = async (userSession) => {
 
         let question = await Question.findOne({
             where:{
-                id: answers.question_id
+                id: answer.question_id
             }
         });
 
-        if(!question.isOpen && question[answer.answer] === question[question.correct]){
+        if(!question.isOpen && answer.answer === question.correct) {
             score++;
         }
     });
