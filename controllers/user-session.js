@@ -101,15 +101,77 @@ module.exports.getFeedback = async (ctx) => {
 }
 
 module.exports.getUserSessionDetails = async (ctx) => {
+    let userSession = await UserSession.findOne({
+        where: {
+            id: ctx.params.user_session_id
+        }
+    });
 
-    if(ctx.state.jwtdata.isProf){
-        
+    if (userSession) {
+        let ownUserSession = userSession.id === ctx.state.jwtdata.id ? true : false;
 
+        if (ctx.state.jwtdata.isProf || ownUserSession) {
+            let score = await userSession.getScore().score;
+            let questions = [];
+            let temporaryAnswers = await userSession.getAnswers();
 
+            let promises = temporaryAnswers.map(temporaryAnswers => {
+                Question.findOne({
+                    where: {
+                        id: temporaryAnswers.question_id
+                    }
+                })
+            });
+
+            Promise.all(promises)
+                .then((dbQuestions) => {
+                    for (let i = 0; i < questions.length; i++) {
+                        let dto;
+                        dto.question = dbQuestions[i].question;
+
+                        if (dbQuestion[i].isOpen) {
+                            dto.correct = dbQuestion[i].correct;
+                            dto.isOpen = true;
+                        } else {
+                            dto.correct = dbQuestion[i][dbQuestion[i].correct];
+                            dto.answer = dbQuestion[i][temporaryAnswer[i].answer];
+                            dto.feedback = dbQuestion[i].feedback;
+                        }
+
+                        questions.push(dto);
+                    }
+                });
+            /*safe but slow way 
+            for (let i = 0; i < temporaryAnswers.length; i++) {
+                let dto;
+                let question = await Question.findOne({
+                    where: {
+                        id: temporaryAnswers[i].question_id
+                    }
+                });
+
+                dto.question = question.question;
+
+                if (question.isOpen) {
+                    dto.correct = question.correct;
+                    dto.isOpen = true;
+                } else {
+                    dto.correct = question[question.correct];
+                    dto.answer = question[temporaryAnswer[i].answer];
+                    dto.feedback = question.feedback;
+                }
+
+                questions.push(dto);
+            }
+            */
+            ctx.status = 200;
+            ctx.body = { score: score, questions: questions };
+        } else {
+            ctx.status = 403;
+            ctx.body = { message: "Forbbidden" };
+        }
     } else {
-
-
-
+        ctx.status = 404;
+        ctx.body = { message: "Not Found" };
     }
-
 }

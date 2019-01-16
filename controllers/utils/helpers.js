@@ -118,7 +118,7 @@ module.exports.calculateScore = async (userSession) => {
             }
         });
 
-        if(question[answer.answer] === question[question.correct]){
+        if(!question.isOpen && question[answer.answer] === question[question.correct]){
             score++;
         }
     });
