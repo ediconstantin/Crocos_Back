@@ -113,18 +113,18 @@ module.exports.calculateScore = async (userSession) => {
     await answers.map(async answer => {
 
         let question = await Question.findOne({
-            where:{
+            where: {
                 id: answer.question_id
             }
         });
 
-        if(!question.isOpen && answer.answer === question.correct) {
+        if (!question.isOpen && answer.answer === question.correct) {
             score++;
         }
     });
 
     await Score.create({
-            score: score,
-            user_session_id : userSession.id
+        score: score,
+        user_session_id: userSession.id
     });
 }

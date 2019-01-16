@@ -28,10 +28,6 @@ const jwtSecret = require('./controllers/utils/constants').jwtSecret;
 const accessLogStream = fs.createWriteStream(__dirname + '/access.log', { flags: 'a' });
 const sessionsManagement = require('./controllers/utils/cron').sessionsManagement;
 
-
-const Session = require("./models").Session;
-const calculateScore = require('./controllers/utils/helpers').calculateScore;
-
 const app = new Koa();
 const router = new Router();
 
@@ -39,7 +35,6 @@ const router = new Router();
 sequelize.database.sync();
 
 app.use(cors());
-
 app.use(bodyParser());
 app.use(morgan({ format: 'combined', stream: accessLogStream }));
 app.use(logger());
@@ -55,10 +50,9 @@ router.post('/register', auth.register);
 
 app.use(router.routes());
 app.use(router.allowedMethods());
-
 app.use(jwt({ secret: jwtSecret, key: 'jwtdata' }));
-
 app.use(mount('/user/photo', serve('./public/identicons')));
+
 userRouter.prefix('/user');
 questionRouter.prefix('/question');
 testRouter.prefix('/test');
