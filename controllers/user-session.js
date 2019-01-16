@@ -115,33 +115,6 @@ module.exports.getUserSessionDetails = async (ctx) => {
             let questions = [];
             let temporaryAnswers = await userSession.getAnswers();
 
-            let promises = temporaryAnswers.map(temporaryAnswers => {
-                Question.findOne({
-                    where: {
-                        id: temporaryAnswers.question_id
-                    }
-                })
-            });
-
-            Promise.all(promises)
-                .then((dbQuestions) => {
-                    for (let i = 0; i < questions.length; i++) {
-                        let dto;
-                        dto.question = dbQuestions[i].question;
-
-                        if (dbQuestion[i].isOpen) {
-                            dto.correct = dbQuestion[i].correct;
-                            dto.isOpen = true;
-                        } else {
-                            dto.correct = dbQuestion[i][dbQuestion[i].correct];
-                            dto.answer = dbQuestion[i][temporaryAnswer[i].answer];
-                            dto.feedback = dbQuestion[i].feedback;
-                        }
-
-                        questions.push(dto);
-                    }
-                });
-            /*safe but slow way 
             for (let i = 0; i < temporaryAnswers.length; i++) {
                 let dto;
                 let question = await Question.findOne({
@@ -163,7 +136,7 @@ module.exports.getUserSessionDetails = async (ctx) => {
 
                 questions.push(dto);
             }
-            */
+
             ctx.status = 200;
             ctx.body = { score: score, questions: questions };
         } else {
