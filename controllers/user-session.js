@@ -26,8 +26,10 @@ module.exports.createOrGetUserSession = async (ctx) => {
     if (activeUserSession) {
         questions = await getUserSessionData(activeUserSession);
     } else {
-        activeUserSession = await createUserSession(ctx.request.body.session_id, ctx.state.jwtdata.id);
-        questions = await createUserSessionQuestions(activeUserSession.test_id, activeUserSession.id);
+        let response = await createUserSession(ctx.request.body.session_id, ctx.state.jwtdata.id);
+        activeUserSession = response.userSession;
+        let test_id = response.test_id;
+        questions = await createUserSessionQuestions(test_id, activeUserSession.id);
         await activeUserSession.update({ started: parseInt((Date.now() / 1000).toFixed(0)) });
     }
 
