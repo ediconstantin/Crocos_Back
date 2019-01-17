@@ -22,7 +22,7 @@ module.exports.getSessions = async (ctx) => {
                     user_id: ctx.state.jwtdata.id,
                     status: ctx.query.status
                 },
-                attributes: ['start_hour', 'end_hour', 'status'],
+                attributes: ['start_hour', 'end_hour', 'status', 'token'],
                 order: [
                     ['start_hour', 'DESC']
                 ]
@@ -40,7 +40,7 @@ module.exports.getSessions = async (ctx) => {
                 user_id: ctx.state.jwtdata.id,
                 status: 0
             },
-            attributes: ['start_hour', 'end_hour', 'status'],
+            attributes: ['start_hour', 'end_hour', 'status', 'token'],
             order: [
                 ['start_hour', 'DESC']
             ],
@@ -52,7 +52,7 @@ module.exports.getSessions = async (ctx) => {
                 user_id: ctx.state.jwtdata.id,
                 status: 1
             },
-            attributes: ['start_hour', 'end_hour', 'status'],
+            attributes: ['start_hour', 'end_hour', 'status', 'token'],
             order: [
                 ['start_hour', 'DESC']
             ],
@@ -64,7 +64,7 @@ module.exports.getSessions = async (ctx) => {
                 user_id: ctx.state.jwtdata.id,
                 status: 2
             },
-            attributes: ['start_hour', 'end_hour', 'status'],
+            attributes: ['start_hour', 'end_hour', 'status', 'token'],
             order: [
                 ['start_hour', 'DESC']
             ],
@@ -87,7 +87,7 @@ module.exports.getSessions = async (ctx) => {
             where: {
                 user_id: ctx.state.jwtdata.id,
             },
-            attributes: ['id', 'start_hour', 'end_hour', 'status'],
+            attributes: ['start_hour', 'end_hour', 'status', 'token'],
             order: [
                 ['start_hour', 'DESC']
             ],
