@@ -87,7 +87,7 @@ module.exports.getSessions = async (ctx) => {
             where: {
                 user_id: ctx.state.jwtdata.id,
             },
-            attributes: ['start_hour', 'end_hour', 'status', 'token'],
+            attributes: ['id','start_hour', 'end_hour', 'status', 'token'],
             order: [
                 ['start_hour', 'DESC']
             ],
