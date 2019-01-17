@@ -27,7 +27,8 @@ module.exports.updateAnswer = async (ctx, next) => {
 
     await answer.update({ answer: ctx.request.body.answer });
 
-    ctx.body = getFeedback(testOptions.liveFeedback, answer.question);
+    //ctx.body = getFeedback(testOptions.liveFeedback, answer.question);
+    ctx.status = 200;
 }
 
 module.exports.startTiming = async (ctx) => {
