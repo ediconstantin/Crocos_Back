@@ -79,7 +79,18 @@ module.exports.generateSimpleToken = (characters) => {
 
 module.exports.simpleDateToUnixTime = (simpleDate) => {
     //simpleDate should have the format '12 02 2015 21:15:00'
-    let unixTime = parseInt((new Date(simpleDate).getTime() / 1000).toFixed(0))
+
+    let toFormat = simpleDate.split(" ");
+    let year = toFormat[0];
+    let month = toFormat[1];
+    let day = toFormat[2];
+    let hour = toFormat[3];
+    let splitHour = hour.split(":");
+    
+    let currDate = new Date(year,month,day,splitHour[0],splitHour[1],0,0).getTime();
+    console.log(currDate);
+
+    let unixTime = parseInt((currDate / 1000).toFixed(0))
     return unixTime;
 }
 
