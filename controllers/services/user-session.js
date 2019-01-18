@@ -17,10 +17,10 @@ let createErrorMessage = (retries) => {
     return 'The test could only be taken ' + retries + ' times.';
 }
 
-let validateNewUserSession = async (test_id, retries, user_id) => {
+let validateNewUserSession = async (session_id, retries, user_id) => {
     let userSessions = await UserSession.count({
         where: {
-            test_id: test_id,
+            session_id: session_id,
             user_id: user_id
         }
     });
@@ -52,17 +52,16 @@ let withdrawQuestions = (questions, questionsNumber) => {
 module.exports.createUserSession = async (session_id, user_id) => {
     let testMeta = await getTestThroughSession(session_id);
 
-    await validateNewUserSession(testMeta.id, testMeta.retries, user_id);
+    //await validateNewUserSession(session_id, testMeta.retries, user_id);
 
     let userSession = await UserSession.create({
         started: 0,
         isOpen: true,
         session_id: session_id,
-        test_id: testMeta.id,
         user_id: user_id
     });
 
-    return userSession;
+    return {userSession: userSession, test_id: testMeta.id};
 }
 
 module.exports.createsUserSessionQuestions = async (testId, userSessionId) => {
@@ -72,6 +71,7 @@ module.exports.createsUserSessionQuestions = async (testId, userSessionId) => {
 
     let answers = [];
 
+    console.log("here");
     for (let i = 0; i < questions.length; i++) {
         answers[i] = Answer.create({
             question_id: questions[i].id,

@@ -12,7 +12,6 @@ module.exports.updateAnswer = async (ctx, next) => {
     let answer = await Answer.findOne({
         where: {
             id: ctx.request.body.answer_id,
-            answer: '#',
         },
         include: { model: Question }
     });
@@ -21,12 +20,15 @@ module.exports.updateAnswer = async (ctx, next) => {
         throw new AppError('Answer unavailable', 400);
     }
 
+    /*
     let testOptions = await validateUserSession(answer.user_session_id, ctx.state.jwtdata.id);
     validateAnswer(testOptions.strictTimed, answer.started, answer.question.duration);
+    */
 
     await answer.update({ answer: ctx.request.body.answer });
 
-    ctx.body = getFeedback(testOptions.liveFeedback, answer.question);
+    //ctx.body = getFeedback(testOptions.liveFeedback, answer.question);
+    ctx.status = 200;
 }
 
 module.exports.startTiming = async (ctx) => {

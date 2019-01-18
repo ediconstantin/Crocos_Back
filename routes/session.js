@@ -11,10 +11,13 @@ router.get('/public/:session_token', sessionController.getPublicSessionByToken);
 
 router.get('/', sessionController.getSessions);
 router.get('/:session_id', sessionController.getSession);
+router.get('/full/:session_id', sessionController.getSessionWithUserSessions);
 
 router.post('/', sessionController.createSession);
 
 router.put('/', sessionController.updateSession);
 router.put('/close/:session_id', sessionController.forceClose);
+
+router.delete('/:session_id', sessionController.deleteSession);
 
 module.exports = router;

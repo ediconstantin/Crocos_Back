@@ -23,6 +23,7 @@
     "koa": "^2.6.2",
     "koa-body-parser": "^1.1.2",
     "koa-combine-routers": "^4.0.2",
+    "koa-cors": "0.0.16",
     "koa-jwt": "^3.5.1",
     "koa-logger": "^3.2.0",
     "koa-morgan": "^1.0.1",
@@ -30,6 +31,7 @@
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "mysql2": "^1.6.4",
+    "node-cron": "^2.0.3",
     "sequelize": "^4.41.2"
   }
 }

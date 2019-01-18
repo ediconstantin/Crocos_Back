@@ -26,8 +26,10 @@ module.exports.createOrGetUserSession = async (ctx) => {
     if (activeUserSession) {
         questions = await getUserSessionData(activeUserSession);
     } else {
-        activeUserSession = await createUserSession(ctx.request.body.session_id, ctx.state.jwtdata.id);
-        questions = await createUserSessionQuestions(activeUserSession.test_id, activeUserSession.id);
+        let response = await createUserSession(ctx.request.body.session_id, ctx.state.jwtdata.id);
+        activeUserSession = response.userSession;
+        let test_id = response.test_id;
+        questions = await createUserSessionQuestions(test_id, activeUserSession.id);
         await activeUserSession.update({ started: parseInt((Date.now() / 1000).toFixed(0)) });
     }
 
@@ -97,5 +99,54 @@ module.exports.getFeedback = async (ctx) => {
                 break;
             }
         }
+    }
+}
+
+module.exports.getUserSessionDetails = async (ctx) => {
+    let userSession = await UserSession.findOne({
+        where: {
+            id: ctx.params.user_session_id
+        }
+    });
+
+    if (userSession) {
+        let ownUserSession = userSession.id === ctx.state.jwtdata.id ? true : false;
+
+        if (ctx.state.jwtdata.isProf || ownUserSession) {
+            let score = await userSession.getScore().score;
+            let questions = [];
+            let temporaryAnswers = await userSession.getAnswers();
+
+            for (let i = 0; i < temporaryAnswers.length; i++) {
+                let dto;
+                let question = await Question.findOne({
+                    where: {
+                        id: temporaryAnswers[i].question_id
+                    }
+                });
+
+                dto.question = question.question;
+
+                if (question.isOpen) {
+                    dto.correct = question.correct;
+                    dto.isOpen = true;
+                } else {
+                    dto.correct = question[question.correct];
+                    dto.answer = question[temporaryAnswer[i].answer];
+                    dto.feedback = question.feedback;
+                }
+
+                questions.push(dto);
+            }
+
+            ctx.status = 200;
+            ctx.body = { score: score, questions: questions };
+        } else {
+            ctx.status = 403;
+            ctx.body = { message: "Forbbidden" };
+        }
+    } else {
+        ctx.status = 404;
+        ctx.body = { message: "Not Found" };
     }
 }
